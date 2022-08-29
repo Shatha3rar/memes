@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="myimg"> </div>
+    <script>
+
+        function getrandom(val) {
+            let array = [];
+            for (let i = 0; i < val; i++) {
+                let result = Math.random() * 100;
+                result = Math.round();
+                array.push(result);
+                return array;
+            }
+        }
+        async function init() {
+            //console.log("shatha");
+            for (let i = 0; i < 3; i++) {
+                let result = Math.random() * 100;
+                result = Math.round(result);
+                //חיבור לדייב שנמצא בטופס
+                const divimg = document.getElementById("myimg");
+                //הפעלת הפונקציה שמביאה ממים
+                const mem = await getmemes();
+
+                //יצירת אפייקט שיוכל להכיל תמונה
+                const img = document.createElement("img");
+                // הגדרה של גודל התמונה
+                img.width = 200;
+                // קבלת הכתובת של התמונה מהמערך של התמונות
+                img.src = mem[result].url;
+                // הוספת האובייקט של התמונה לדייב
+                divimg.appendChild(img);
+                // יצירת פסקה 
+                const p = document.createElement("p");
+                //   הוספת טקסט לפסקה מאותו מקום במערך 
+                p.innerText = mem[result].name;
+                // הוספת הפסקה לדייב
+                divimg.appendChild(p);
+            }
+            //console.log(mem);
+
+        }
+        init();
+
+        async function getmemes() {
+            // יצירת כתובת של האתר
+            const mem = "https://api.imgflip.com/get_memes";
+            // קריאת הכתובת 
+            const result = await fetch(mem);
+            // הפיכת המידע למערך
+            const json = await result.json();
+            // החזרת המערך של המימיז
+            return json.data.memes;
+        }
+    </script>
+</body>
+
+</html>
